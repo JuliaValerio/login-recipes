@@ -69,7 +69,7 @@ function Dashboard(props) {
 			<Typography component="h1" variant="h3">
 			<FontAwesomeIcon icon={faCoffee} /> Recipes 
 			</Typography>
-			{quote ? `"${quote}"` : <CircularProgress size={30} />}
+			{quote ? `"${quote}"` : <CircularProgress size={35} />}
 			</div>
 		</div>
 	);
