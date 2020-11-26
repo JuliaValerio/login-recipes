@@ -1,0 +1,39 @@
+
+.Dashboard-root-11{
+    /* flex-grow: 1; */
+    width: 100%;
+    justify-content: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+header div {
+    width: 100%;
+    align-items: center;
+    display: flex;
+    justify-content: space-between;
+    background-color: #fff;
+    margin: 0px 10px 0px 10px;
+}
+
+
+h1{
+    font-family: 'Sansita Swashed', cursive !important;
+    color: rgb(65, 61, 61)!important;
+}
+
+.container-list{
+    width: 100%;
+    height: auto;
+    margin: 20px 0px 20px -20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.container-list div {
+    margin: 20px 0px 20px 0px;
+    width: 40px;
+    height: 70px;
+}
