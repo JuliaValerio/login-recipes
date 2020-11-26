@@ -22,6 +22,14 @@ h1{
     color: rgb(65, 61, 61)!important;
 }
 
+p, button{
+    font-family: 'Montserrat' !important;
+}
+
+button{
+    font-weight: bold !important;
+}
+
 .container-list{
     width: 100%;
     height: auto;

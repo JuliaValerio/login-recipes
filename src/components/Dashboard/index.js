@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import { Toolbar, AppBar, Button, Typography, Avatar, CircularProgress } from '@material-ui/core'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCoffee } from '@fortawesome/free-solid-svg-icons'
@@ -6,6 +6,7 @@ import VerifiedUserOutlined from '@material-ui/icons/VerifiedUserOutlined'
 import withStyles from '@material-ui/core/styles/withStyles'
 import firebase from '../firebase'
 import { withRouter } from 'react-router-dom'
+import Recipes from '../Recipes'
 import "./style.css"
 
 const styles = theme => ({
@@ -38,11 +39,11 @@ function Dashboard(props) {
 		return null
 	}
 
-	const [quote, setQuote] = useState('')
+	// const [quote, setQuote] = useState('')
 
-	useEffect(() => {
-		firebase.getCurrentUserQuote().then(setQuote)
-	})
+	// useEffect(() => {
+	// 	firebase.getCurrentUserQuote().then(setQuote)
+	// })
 
 	return (
 		<div className={classes.root}>
@@ -69,7 +70,9 @@ function Dashboard(props) {
 			<Typography component="h1" variant="h3">
 			<FontAwesomeIcon icon={faCoffee} /> Recipes 
 			</Typography>
-			{quote ? `"${quote}"` : <CircularProgress size={35} />}
+			</div>
+			<div>
+			{<Recipes /> ? <Recipes /> : <CircularProgress size={35} />}
 			</div>
 		</div>
 	);
