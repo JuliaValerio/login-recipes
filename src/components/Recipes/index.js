@@ -1,4 +1,4 @@
-import React, { useState, Fragment } from 'react';
+import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { useQuery } from "react-query"
 import { Container, Accordion, AccordionDetails, AccordionSummary, Typography, Input, Button } from '@material-ui/core';
@@ -25,42 +25,8 @@ export default function Recipes() {
     const classes = useStyles();
     const [expanded, setExpanded] = React.useState(false);
 
-    const [currentCategory, setCurrentCategory] = useState(0)
-    const [selectedMealId, setSelectedMealId] = useState(null)
     const [searchTerm, setSearchTerm] = useState("")
     const [isSearch, setSearch] = useState(false)
-
-    const { isLoading, error, data: categories } = useQuery(
-        "categories",
-        async () => {
-            let result = await fetch(
-                "https://www.themealdb.com/api/json/v1/1/categories.php"
-            ).then(res => res.json())
-            result = result.categories.map(item => {
-                return {
-                    key: item.idCategory,
-                    text: item.strCategory,
-                    value: item.idCategory,
-                    image: item.strCategoryThumb,
-                }
-            })
-            return result
-        }
-    )
-
-    const { data: meals } = useQuery(
-        ["meals", currentCategory, categories],
-        async (key, currentCategory, data) => {
-            let result = await fetch(
-                `https://www.themealdb.com/api/json/v1/1/filter.php?c=${data[currentCategory].text}`
-            ).then(res => res.json())
-
-            return result.meals
-        },
-        {
-            enabled: categories,
-        }
-    )
 
     const { data: searchResults } = useQuery(
         ["searchMeals", isSearch, searchTerm],
@@ -90,7 +56,7 @@ export default function Recipes() {
     };
 
     return (
-        <Container maxWidth="sm">
+        <Container className="container" maxWidth="sm">
             <div className="search">
                 <Input
                     className="search-input"
@@ -107,68 +73,62 @@ export default function Recipes() {
             {searchTerm && isSearch ? (
                 searchResults &&
                 searchResults.map(meal => {
-                  return (
-            <div className={classes.root}>
-                <Accordion expanded={expanded === meal.idMeal} onChange={handleChange(meal.idMeal)}>
-                    <AccordionSummary
-                        expandIcon={<ExpandMoreIcon />}
-                        aria-controls="panel1bh-content"
-                        id="panel1bh-header"
-                    >
-                        <img className="meal-photo" src={meal.strMealThumb}></img>
-                        
-                        <Typography component="h1" className={classes.secondaryHeading}> {meal.strMeal} </Typography>
-                    </AccordionSummary>
-                    <AccordionDetails>
-                        <div className="details">
-                            <Typography>
-                                Lista de ingredientes
-                            </Typography>
+                    return (
+                        <div key={meal.idMeal} className={classes.root}>
+                            <Accordion expanded={expanded === meal.idMeal} onChange={handleChange(meal.idMeal)}>
+                                <AccordionSummary
+                                    expandIcon={<ExpandMoreIcon />}
+                                    aria-controls="panel1bh-content"
+                                    id="panel1bh-header"
+                                >
+                                    <img className="meal-photo" src={meal.strMealThumb} alt="Food"></img>
+
+                                    <Typography component="h1" className={classes.secondaryHeading}> {meal.strMeal} </Typography>
+                                </AccordionSummary>
+                                <AccordionDetails>
+                                    <div className="details">
+                                        <Typography className="title">
+                                        Ingredients: 
+                                        </Typography>
+                                        <ul>
+                                            <li>{meal.strMeasure1}  {meal.strIngredient1}</li>
+                                            <li>{meal.strMeasure2}  {meal.strIngredient2}</li>
+                                            <li>{meal.strMeasure3}  {meal.strIngredient3}</li>
+                                            <li>{meal.strMeasure4}  {meal.strIngredient4}</li>
+                                            <li>{meal.strMeasure5}  {meal.strIngredient5}</li>
+                                            <li>{meal.strMeasure6}  {meal.strIngredient6}</li>
+                                            <li>{meal.strMeasure7}  {meal.strIngredient7}</li>
+                                            <li>{meal.strMeasure8}  {meal.strIngredient8}</li>
+                                            <li>{meal.strMeasure9}  {meal.strIngredient9}</li>
+                                            <li>{meal.strMeasure10}  {meal.strIngredient10}</li>
+                                            <li>{meal.strMeasure11}  {meal.strIngredient11}</li>
+                                            <li>{meal.strMeasure12}  {meal.strIngredient12}</li>
+                                            <li>{meal.strMeasure13}  {meal.strIngredient13}</li>
+                                            <li>{meal.strMeasure14}  {meal.strIngredient14}</li>
+                                            <li>{meal.strMeasure15}  {meal.strIngredient15}</li>
+                                            <li>{meal.strMeasure16}  {meal.strIngredient16}</li>
+                                            <li>{meal.strMeasure17}  {meal.strIngredient17}</li>
+                                            <li>{meal.strMeasure18}  {meal.strIngredient18}</li>
+                                            <li>{meal.strMeasure19}  {meal.strIngredient19}</li>
+                                            <li>{meal.strMeasure20}  {meal.strIngredient20}</li>
+                                        </ul>
+                                    </div>
+                                    <div className="details">
+                                    <Typography className="title">
+                                    Preparation instructions: 
+                                        </Typography>
+                                        {meal.strInstructions}
+                                    </div>
+                                </AccordionDetails>
+                            </Accordion>
                         </div>
-                        <div className="details">
-                            <Typography>
-                                Modo de preparo
-                        </Typography>
-                        </div>
-                    </AccordionDetails>
-                </Accordion>
-            </div>
-                  )
+                    )
                 })
-              ) : (
-                <Fragment>
-                  {meals &&
-                    meals.map(meal => {
-                      return (
-            <div className={classes.root}>
-                <Accordion expanded={expanded === meal.idMeal} onChange={handleChange(meal.idMeal)}>
-                    <AccordionSummary
-                        expandIcon={<ExpandMoreIcon />}
-                        aria-controls="panel1bh-content"
-                        id="panel1bh-header"
-                    >
-                        <img className="meal-photo"  src={meal.strMealThumb}></img>
-                        
-                        <Typography component="h1" className={classes.secondaryHeading}> {meal.strMeal} </Typography>
-                    </AccordionSummary>
-                    <AccordionDetails>
-                        <div className="details">
-                            <Typography>
-                                Lista de ingredientes
-                            </Typography>
-                        </div>
-                        <div className="details">
-                            <Typography>
-                                Modo de preparo
-                        </Typography>
-                        </div>
-                    </AccordionDetails>
-                </Accordion>
-            </div>
-                      )
-                    })}
-                </Fragment>
-              )}
+            ) : (
+                    <Typography>
+                        Do research to get started !
+                    </Typography>
+                )}
         </Container>
     );
 }
