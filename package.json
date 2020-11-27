@@ -12,6 +12,7 @@
     "netlify-cli": "^2.69.0",
     "react": "^16.8.1",
     "react-dom": "^16.8.1",
+    "react-query": "^2.26.3",
     "react-router-dom": "^4.3.1",
     "react-scripts": "2.1.3"
   },
